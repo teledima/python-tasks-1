@@ -12,17 +12,17 @@ subjects = pd.read_json('data-1/subjects.json')
 ratings = pd.read_json('data-1/ratings.json')
 
 
-def top10_students_rating():
+def top5_students_rating():
     mean_rating = ratings.groupby('student_id').mean()["rating"]
     return pd.concat([students, mean_rating], axis='columns', join='inner').sort_values('rating', ascending=False)[:10]
 
 
-def top10_students_truancy():
+def top5_students_truancy():
     sum_truancy = ratings.groupby('student_id').sum()["truancy"]
     return pd.concat([students, sum_truancy], axis='columns', join='inner').sort_values('truancy', ascending=False)[:10]
     
 
-def top10_subjects_rating():
+def top5_subjects_rating():
     mean_rating = ratings.groupby('subject_id').mean()["rating"]
     return pd.concat([subjects, mean_rating], axis='columns', join='inner').sort_values('rating', ascending=True)[:10]
     
