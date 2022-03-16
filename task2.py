@@ -7,14 +7,15 @@ def get_data(filename: str):
         data = json.load(data_file)
         return data
 
-students = pd.read_json('data-1/students.json')
-subjects = pd.read_json('data-1/subjects.json')
-ratings = pd.read_json('data-1/ratings.json')
+cars = pd.read_json('data-2/cars.json')
+sales = pd.read_json('data-2/sales.json')
+sellers = pd.read_json('data-2/sellers.json')
+spares = pd.read_json('data-2/spares.json')
 
 
-def top5_students_rating():
-    mean_rating = ratings.groupby('student_id').mean()["rating"]
-    return pd.concat([students, mean_rating], axis='columns', join='inner').sort_values('rating', ascending=False)[:10]
+def top_car_rating():
+    max_car_sell = sales.groupby('car_id').count()['seller_id'].sort_values()
+    return mean_rating['seller_id']
 
 
 def top5_students_truancy():
@@ -25,27 +26,16 @@ def top5_students_truancy():
 def top5_subjects_rating():
     mean_rating = ratings.groupby('subject_id').mean()["rating"]
     return pd.concat([subjects, mean_rating], axis='columns', join='inner').sort_values('rating', ascending=True)[:10]
-    
-
-def top10_common(mode: int):
-    if mode == 1:
-        result = top10_students_rating()
-    elif mode == 2:
-        result = top10_students_truancy()
-    elif mode == 3: 
-        result = top10_subjects_rating()
-    print(f'{result}\n')
 
 if __name__ == "__main__":
     while True:
-        mode = int(input("1 - Однопоточное решение\n2 - Процессное решение\n3 - Выход\nВведите команду: "))
+        mode = int(input("1 - События таймера\n2 - Процессное решение\n3 - Выход\nВведите команду: "))
         if mode == 1:
-            top10_common(1)
-            top10_common(2)
-            top10_common(3)
+            print(top_car_rating())
+            # top10_common(2)
+            # top10_common(3)
         elif mode == 2:
-            with Pool(processes=3) as pool:
-                pool.map(top10_common, (1, 2, 3))
+            pass
         elif mode == 3:
             break
         
