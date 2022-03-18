@@ -63,3 +63,5 @@ if __name__ == "__main__":
                 pool.map(top_common, [1, 2, 3])
         elif command == 3:
             break
+        else:
+            print('Неверная команда')
